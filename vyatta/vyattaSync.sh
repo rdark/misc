@@ -8,8 +8,8 @@
 # zone-policy + static route sync support
 # + remote command exection
 #
-# Copies firewall rules from primary to secondary
-# and applies them to the appropriate interfaces.
+# Copies firewall rules, zones & routes
+# from primary to secondary node
 #
 # Deletes existing firewall rules on secondary and
 # removes any firewall sets on interfaces, so make
