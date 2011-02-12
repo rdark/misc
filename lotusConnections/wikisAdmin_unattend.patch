@@ -1,0 +1,36 @@
+--- wikisAdmin.py	2011-02-11 15:23:42.196822296 +0000
++++ wikisAdmin_unattend.py	2011-02-11 15:23:42.209295528 +0000
+@@ -11,6 +11,9 @@
+ # IBM Corp.                                                         
+ #                                                                   
+ # ***************************************************************** 
++# This version hacked by Richard Clark <richard@fohnet.co.uk>
++# Added support for non-human interactions via serviceNum variable
++
+ import lotusConnectionsCommonAdmin
+ 
+ domainName = AdminControl.getDefaultDomain()
+@@ -43,8 +46,12 @@
+         i=i+1
+         retry=1
+ 	while retry==1:
+-	  print "Which service do you want to connect to?"
+-	  response = sys.stdin.readline()
++      try:
++        serviceNum
++        response = serviceNum
++      except:
++	    print "Which service do you want to connect to?"
++        response = sys.stdin.readline()
+ 	  print ""
+ 	  try:
+ 	    j = int(response) - 1
+@@ -52,7 +59,7 @@
+ 	    retry=0
+ 	  except:
+ 	    print "Invalid selection, specify an index number between 1 and %i." % len(svcs)
+-	    
++  
+   nodeServer = svcs[j][svcs[j].find("node="):svcs[j].find(",", svcs[j].find("node="))] + ",*"
+   WikisSchedulerServiceName = domainName+':name=WikisSchedulerMBean,type=LotusConnections,cell='+cellName+','+nodeServer
+   WikisDataIntegrityServiceName = domainName+':name=WikisDataIntegrityMBean,type=LotusConnections,cell='+cellName+','+nodeServer
